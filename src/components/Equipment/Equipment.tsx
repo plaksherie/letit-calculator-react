@@ -22,7 +22,7 @@ const Equipment: React.FC<IEquipmentProps> = ({data, onClick, disabled}: IEquipm
             >
                 <div className="w-[50px] flex-custom flex items-center md:w-[20px]">
                     {data.only_one &&
-                        <input type="radio" name={data.title} className={`${inputDefaultClasses} `}checked={product.selected} readOnly={true}/>
+                        <input type="radio" name={data.title} className={`${inputDefaultClasses} `} checked={product.selected} readOnly={true}/>
                     }
                     {!data.only_one &&
                         <input type="checkbox" name={data.title} className={`${inputDefaultClasses}`} checked={product.selected} readOnly={true}/>

@@ -60,3 +60,12 @@ export interface IFormCalculatorData {
     fullAmount: string
     inputs: Inputs
 }
+
+export interface IFormCalculatorResponse {
+    success: boolean
+    data: {
+        status: boolean
+        error?: string
+        numberRequest?: number
+    }
+}

@@ -62,6 +62,7 @@ const schema = yup
 export const Calculator = () => {
     const [currentStep, setCurrentStep] = useState(0)
     const [sentForm, setSentForm] = useState(false)
+    const [numberRequest, setNumberRequest] = useState(0)
     const {
         register,
         trigger,
@@ -188,6 +189,9 @@ export const Calculator = () => {
         try {
             const result = await FormApi.calculator(sendData)
             console.log(result)
+            if (result.data.status && result.data.numberRequest) {
+                setNumberRequest(result.data.numberRequest)
+            }
         } catch (e) {
             console.error(e)
         } finally {
@@ -196,7 +200,7 @@ export const Calculator = () => {
     }
 
     useEffect(() => {
-        setCurrentStep(0)
+        // setCurrentStep(0)
     }, [selectedIndex])
 
     useEffect(() => {
@@ -247,7 +251,7 @@ export const Calculator = () => {
                 </div>
             }
             {sentForm &&
-                <div className={`mt-[60px] mb-[60px] text-[14px]`}>Ваша заявка отправлена</div>
+                <div className={`mt-[60px] mb-[60px] text-[14px]`}>{`Ваша заявка отправлена. ${numberRequest > 0 && `Номер заявки №${numberRequest}`}`}</div>
             }
         </>
     )
