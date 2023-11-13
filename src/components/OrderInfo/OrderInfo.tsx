@@ -10,6 +10,7 @@ import {
     getSelectedParameter, getAllSelectedParameters,
     getSelectedProducts, getServices, getServicesPrice
 } from "@/features/residentialComplex/utils.ts";
+import {getTitleService} from "@/utils/title.ts";
 
 
 interface IElementService {
@@ -116,7 +117,7 @@ const OrderInfo: React.FC<IOrderInfoProps> = ({clearOrder}: IOrderInfoProps) => 
                 {services.map((service, index) => (
                     isShowElementOrder(service) &&
                     <div key={index}>
-                        {elementOrder(service.icon, service.title, elementsService(
+                        {elementOrder(service.icon, getTitleService(service), elementsService(
                             [
                                 {
                                     title: getSelectedParameter(service)?.title,

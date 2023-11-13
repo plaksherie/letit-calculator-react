@@ -11,7 +11,7 @@ const Equipment: React.FC<IEquipmentProps> = ({data, onClick}: IEquipmentProps) 
     return (<>
         {data.products.map(product => (
             <label
-                className={`cursor-pointer flex mb-[10px] p-[10px] border-[#e8e8e8] border-solid border-[1px] ${product.selected && activeItemClasses}`}
+                className={`cursor-pointer flex items-center mb-[10px] p-[10px] border-[#e8e8e8] border-solid border-[1px] ${product.selected && activeItemClasses}`}
                 onChange={() => onClick(product.id)}
                 key={product.id}>
                 <div className="w-[50px] flex-custom flex items-center md:w-[20px]">
@@ -22,9 +22,9 @@ const Equipment: React.FC<IEquipmentProps> = ({data, onClick}: IEquipmentProps) 
                         <input type="checkbox" name={data.title} className={`${inputDefaultClasses}`} checked={product.selected} readOnly={true}/>
                     }
                 </div>
-                <div className="w-[70px] mr-[20px] flex-custom flex justify-center items-center">
+                <div className="w-[70px] h-[50px] mr-[20px] flex-custom flex justify-center items-center">
                     <img src={`${product.image_url}`} alt=""
-                         className={`align-middle max-h-[50px]`}/>
+                         className={`w-full h-full object-contain`}/>
                 </div>
                 <div className="">
                     <div className="font-bold text-black text-[14px] leading-relaxed">{product.title}</div>

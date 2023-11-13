@@ -35,6 +35,7 @@ export interface IAdditionalService {
 
 export interface IAcfService {
 	title: string
+	title_in_form: string
 	icon: string
 	title_main_parameters: string
 	main_parameters: IMainParameter[]

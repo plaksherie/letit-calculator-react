@@ -32,6 +32,7 @@ import {
     getServices, getServicesPrice
 } from "@/features/residentialComplex/utils.ts";
 import {getPrice} from "@/utils/price.ts";
+import {getTitleService} from "@/utils/title.ts";
 
 
 const schema = yup
@@ -132,7 +133,7 @@ export const Calculator = () => {
                 const selectedAdditionalServices = getSelectedAdditionalServices(service)
                 const equipmentBlocks = service.equipment_blocks
                 return [...serviceAccumulator, {
-                    title: service.title,
+                    title: getTitleService(service),
                     mainParameter: {
                         title: selectedParameter ? selectedParameter.title : '',
                         price: getPrice(selectedParameter?.price),
