@@ -1,0 +1,13 @@
+.select {
+	@apply outline-none w-full bg-select border-lightGray transition-all duration-200 ease-in max-w-[460px] text-[14px];
+	@apply md:max-w-full;
+}
+
+.select:hover {
+	@apply border-gray;
+}
+
+.select:focus {
+	@apply border-blue;
+	box-shadow: 0 0 1px var(--calc-color-blue);
+}

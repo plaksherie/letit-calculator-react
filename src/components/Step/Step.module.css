@@ -1,0 +1,39 @@
+.step {
+	@apply w-full flex justify-center align-middle flex-col relative;
+}
+
+.step::before {
+	content: "";
+	@apply absolute left-0 w-full bg-lightGray -z-10 top-[40px] h-[1px];
+	@apply md:top-[24px]
+}
+
+.step.active::before {
+	@apply bg-blue h-[3px];
+}
+
+.icon {
+	@apply rounded-full flex justify-center align-middle mx-auto bg-lightBlue w-[80px] h-[80px] ;
+	@apply md:w-[50px] md:h-[50px];
+}
+
+.icon svg {
+	@apply w-full opacity-40 h-auto align-middle fill-gray w-[50px];
+}
+
+.step.active .icon {
+	@apply bg-blue;
+}
+
+.step.active .icon svg {
+	@apply opacity-100 fill-white;
+}
+
+.text {
+	@apply text-center mt-2.5 font-normal leading-4 text-[10px];
+	letter-spacing: 0.1px;
+}
+
+.step.active .text {
+	@apply text-blue font-bold;
+}

@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* @tailwind base; */
+/* @tailwind components; */
+@tailwind utilities;
+
+:root {
+	--calc-color-blue: #155dfd;
+	--calc-color-red: #ff214c;
+	--calc-color-light-red: #fff0f3;
+	--calc-color-light-blue: #f5f8ff;
+	--calc-color-middle-blue: #d2e1f8;
+	--calc-color-gray: #747681;
+	--calc-color-light-gray: #d2d6dd;
+	--calc-color-dark-gray: #282d46;
+	--calc-color-black: #141414;
+	--calc-color-select: #f3f3f6;
+}
+
+.calculator {
+	margin: 0 auto;
+	width: 96%;
+	max-width: 1150px;
+	@apply text-black font-default mt-[60px] mb-[120px];
+	@apply md:mt-[40px] md:px-[8px]
+}

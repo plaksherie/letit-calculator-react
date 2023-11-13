@@ -1,0 +1,15 @@
+.alert {
+
+}
+
+.alert h5 {
+    @apply text-[18px] m-0 font-normal leading-relaxed;
+}
+
+.alert p {
+    @apply m-0 mb-[10px] text-[14px] leading-relaxed;
+}
+
+.alert a {
+    @apply no-underline text-blue font-normal text-[14px];
+}

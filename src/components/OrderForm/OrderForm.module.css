@@ -1,0 +1,20 @@
+.field {
+    @apply flex flex-col w-full mb-[20px]
+}
+
+.input, .textarea {
+    @apply mt-[10px] outline-none bg-transparent p-[8px] border-lightGray border-[1px] border-solid transition-all duration-200 ease-in font-default text-[14px] box-border w-full;
+}
+
+.input:hover, .textarea:hover {
+    @apply border-gray;
+}
+
+.input:focus, .textarea:focus {
+    @apply border-blue;
+    box-shadow: 0 0 1px var(--calc-color-blue);
+}
+
+.agree a {
+    @apply no-underline text-blue
+}
