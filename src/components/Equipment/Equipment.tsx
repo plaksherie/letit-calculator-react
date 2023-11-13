@@ -3,20 +3,26 @@ import {IEquipmentProps} from "@/interfaces/Equipment.ts";
 import {getPrice} from "@/utils/price.ts";
 
 
-const Equipment: React.FC<IEquipmentProps> = ({data, onClick}: IEquipmentProps) => {
-
+const Equipment: React.FC<IEquipmentProps> = ({data, onClick, disabled}: IEquipmentProps) => {
     const inputDefaultClasses = 'm-0 w-[16px] h-[16px] cursor-pointer md:w-[13px]'
     const activeItemClasses = 'border-blue'
+    const disabledClasses = 'opacity-40'
 
     return (<>
         {data.products.map(product => (
             <label
-                className={`cursor-pointer flex items-center mb-[10px] p-[10px] border-[#e8e8e8] border-solid border-[1px] ${product.selected && activeItemClasses}`}
-                onChange={() => onClick(product.id)}
-                key={product.id}>
+                className={`cursor-pointer flex items-center mb-[10px] p-[10px] border-[#e8e8e8] border-solid border-[1px] ${product.selected && activeItemClasses} ${disabled && disabledClasses}`}
+                onClick={(e) => {
+                    e.preventDefault()
+                    if (!disabled) {
+                        onClick(product.id)
+                    }
+                }}
+                key={product.id}
+            >
                 <div className="w-[50px] flex-custom flex items-center md:w-[20px]">
                     {data.only_one &&
-                        <input type="radio" name={data.title} className={`${inputDefaultClasses} `} checked={product.selected} readOnly={true}/>
+                        <input type="radio" name={data.title} className={`${inputDefaultClasses} `}checked={product.selected} readOnly={true}/>
                     }
                     {!data.only_one &&
                         <input type="checkbox" name={data.title} className={`${inputDefaultClasses}`} checked={product.selected} readOnly={true}/>

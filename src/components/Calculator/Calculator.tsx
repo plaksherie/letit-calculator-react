@@ -5,7 +5,7 @@ import {
 } from "@/features/residentialComplex/residentialComplexSlice"
 import {useAppDispatch, useAppSelector} from "@/hooks"
 import {useEffect, useRef, useState} from "react"
-import { animateScroll } from 'react-scroll'
+import {animateScroll} from 'react-scroll'
 // import { styles } from "./Calculator.module.css"
 import {Address} from "@/components/Address/Address"
 import Button from "@/components/Button/Button"
@@ -29,7 +29,7 @@ import {
     getSelectedAdditionalServices,
     getSelectedParameter, getAllSelectedParameters,
     getSelectedProductsInBlock,
-    getServices, getServicesPrice
+    getServices, getServicesPrice, isBlockedEquipmentBlock
 } from "@/features/residentialComplex/utils.ts";
 import {getPrice} from "@/utils/price.ts";
 import {getTitleService} from "@/utils/title.ts";
@@ -62,7 +62,13 @@ const schema = yup
 export const Calculator = () => {
     const [currentStep, setCurrentStep] = useState(0)
     const [sentForm, setSentForm] = useState(false)
-    const {register, trigger, control, formState: {errors}, getValues} = useForm<Inputs>({resolver: yupResolver(schema)})
+    const {
+        register,
+        trigger,
+        control,
+        formState: {errors},
+        getValues
+    } = useForm<Inputs>({resolver: yupResolver(schema)})
     const selectedResidentialComplex = useAppSelector(state => getSelectedResidentialComplex(state.residentialComplex))
     const selectedIndex = useAppSelector(state => getSelectedIndex(state.residentialComplex))
     const services = getServices(selectedResidentialComplex)
@@ -80,13 +86,18 @@ export const Calculator = () => {
 
     const serviceSteps = services.map((service, index) => {
         return (
-            <Service serviceIndex={index} titleMainParameters={service.title_main_parameters}
-                     mainParameters={service.main_parameters} additionalServices={service.additional_services}
-                     equipmentBlocks={service.equipment_blocks} alertContent={service.alert_content}
-                     key={index}></Service>
+            <Service serviceIndex={index}
+                     titleMainParameters={service.title_main_parameters}
+                     mainParameters={service.main_parameters}
+                     additionalServices={service.additional_services}
+                     equipmentBlocks={service.equipment_blocks}
+                     alertContent={service.alert_content}
+                     key={index}
+            ></Service>
         )
     })
-    const allSteps = [<Address></Address>, ...serviceSteps, <OrderForm register={register} errors={errors} trigger={trigger} control={control}></OrderForm>]
+    const allSteps = [<Address></Address>, ...serviceSteps,
+        <OrderForm register={register} errors={errors} trigger={trigger} control={control}></OrderForm>]
     // const allSteps = [<Address></Address>,  <OrderForm register={register} errors={errors} trigger={trigger} control={control}></OrderForm>]
 
     const prevStep = () => {
@@ -140,6 +151,10 @@ export const Calculator = () => {
                     },
                     equipmentBlocks: [
                         ...equipmentBlocks.reduce((blockAccumulator: IFormEquipmentBlocks[], block) => {
+                            const isBlocked = isBlockedEquipmentBlock(equipmentBlocks, block)
+                            if (isBlocked) {
+                                return blockAccumulator
+                            }
                             const products = getSelectedProductsInBlock(block)
                             return [...blockAccumulator, {
                                 title: block.title,
@@ -173,11 +188,9 @@ export const Calculator = () => {
         try {
             const result = await FormApi.calculator(sendData)
             console.log(result)
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e)
-        }
-        finally {
+        } finally {
             setSentForm(true)
         }
     }

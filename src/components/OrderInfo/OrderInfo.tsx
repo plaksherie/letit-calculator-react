@@ -127,7 +127,10 @@ const OrderInfo: React.FC<IOrderInfoProps> = ({clearOrder}: IOrderInfoProps) => 
                                     return [...accumulator, {title: product.title, text: getPrice(product.price)}]
                                 }, []),
                                 ...getSelectedAdditionalServices(service).reduce((accumulator: IElementService[], additionalService) => {
-                                    return [...accumulator, {title: additionalService.title, text: getPrice(additionalService.price)}]
+                                    return [...accumulator, {
+                                        title: additionalService.title,
+                                        text: getPrice(additionalService.price)
+                                    }]
                                 }, []),
                             ]
                         ))}

@@ -25,6 +25,7 @@ export interface IEquipmentBlock {
 	title: string
 	products: IProduct[]
 	only_one: boolean
+	only_select: boolean
 }
 
 export interface IAdditionalService {

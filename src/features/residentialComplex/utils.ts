@@ -48,7 +48,13 @@ export const getSelectedProductsInBlock = (equipmentBlock: IEquipmentBlock): IPr
 export const getSelectedProducts = (service: IAcfService): IProduct[] => {
     const parameter = getSelectedParameter(service)
     if (parameter?.skip_products) return []
-    return service.equipment_blocks.flatMap(block => getSelectedProductsInBlock(block))
+    return service.equipment_blocks.flatMap(block => {
+        const isBlocked = isBlockedEquipmentBlock(service.equipment_blocks, block)
+        if (!isBlocked) {
+            return getSelectedProductsInBlock(block)
+        }
+        return []
+    })
 }
 
 export const getAllSelectedProducts = (services: IAcfService[]): IProduct[] => {
@@ -77,4 +83,18 @@ export const getSelectedAdditionalServices = (service: IAcfService): IAdditional
 
 export const getServices = (selectedResidentialComplex?: ResidentialComplex) => {
     return selectedResidentialComplex ? selectedResidentialComplex.acf.services : []
+}
+
+export const isBlockedEquipmentBlock = (blocks: IEquipmentBlock[], currentBlock: IEquipmentBlock): boolean => {
+    const blockOnlySelectWithSelectedProduct = blocks.find(block => {
+        if (!block.only_select) return false
+        const product = block.products.find(product => {
+            return product.selected
+        })
+        if (product) {
+            return true
+        }
+    })
+    return !!(blockOnlySelectWithSelectedProduct && !currentBlock.only_select)
+
 }

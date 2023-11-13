@@ -5,8 +5,7 @@ import {PayloadAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 export const fetchResidentialComplex = createAsyncThunk(
     "residentialComplex/fetchResidentialComplex",
     async () => {
-        const data = await residentialComplexApi.all()
-        return data
+        return await residentialComplexApi.all()
     }
 )
 
@@ -48,7 +47,7 @@ const residentialComplexSlice = createSlice({
             state.selectedResidentialComplex = action.payload
         },
         resetAllSelects: (state) => {
-            const updatedComplexes = state.residentialComplexes.map(complex => ({
+            state.residentialComplexes = state.residentialComplexes.map(complex => ({
                 ...complex,
                 acf: {
                     ...complex.acf,
@@ -72,7 +71,6 @@ const residentialComplexSlice = createSlice({
                     }))
                 }
             }))
-            state.residentialComplexes = updatedComplexes
         },
         selectMainParameter: (state, {payload}: PayloadAction<SelectedMainParameterPayload>) => {
             const selectedIndex = getSelectedIndex(state)
@@ -88,8 +86,11 @@ const residentialComplexSlice = createSlice({
             const products = equipmentBlock.products
             const {product, productIndex} = getProductById(products, payload.productId)
             if (equipmentBlock.only_one) {
-                products.forEach((product, index) => {
-                    if (product.selected) state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[payload.equipmentIndex].products[index].selected = false
+                products.forEach((_product, index) => {
+                    if (_product.selected) {
+                        if (_product.id === product?.id) return
+                        state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[payload.equipmentIndex].products[index].selected = false
+                    }
                 })
             }
             state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[payload.equipmentIndex].products[productIndex].selected = !product?.selected
