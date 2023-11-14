@@ -10,4 +10,5 @@ export interface IButtonProps {
 	onClick?: () => void
 	type: ButtonType
 	disabled?: boolean
+	symbolId?: string
 }

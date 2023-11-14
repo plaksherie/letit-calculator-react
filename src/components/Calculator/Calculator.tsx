@@ -236,8 +236,10 @@ export const Calculator = () => {
                                 {currentStep < services.length + 1 && (
                                     <Button
                                         type={ButtonType.Default}
-                                        text="Далее →"
-                                        onClick={nextStep}></Button>
+                                        text="Далее"
+                                        onClick={nextStep}
+                                        symbolId={'iconNext'}
+                                    ></Button>
                                 )}
                                 {IsLastStep && <Button
                                     type={'agree' in errors ? ButtonType.Disabled : ButtonType.Default}
