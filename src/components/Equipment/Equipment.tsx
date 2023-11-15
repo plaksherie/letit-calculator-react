@@ -1,31 +1,34 @@
 import React from "react";
 import {IEquipmentProps} from "@/interfaces/Equipment.ts";
-import {getPrice} from "@/utils/price.ts";
+import {getPrice} from "@/utils/price.ts"
+import styles from './Equipment.module.css'
 
 
 const Equipment: React.FC<IEquipmentProps> = ({data, onClick, disabled}: IEquipmentProps) => {
-    const inputDefaultClasses = 'm-0 w-[16px] h-[16px] cursor-pointer md:w-[13px]'
     const activeItemClasses = 'border-blue'
     const disabledClasses = 'opacity-40'
 
+    const handleClick = (productId: number) => {
+        if (!disabled) {
+            onClick(productId)
+        }
+    }
+
     return (<>
         {data.products.map(product => (
-            <label
+            <div
                 className={`cursor-pointer flex items-center mb-[10px] p-[10px] border-[#e8e8e8] border-solid border-[1px] ${product.selected && activeItemClasses} ${disabled && disabledClasses}`}
-                onClick={(e) => {
-                    e.preventDefault()
-                    if (!disabled) {
-                        onClick(product.id)
-                    }
+                onClick={() => {
+                    handleClick(product.id)
                 }}
                 key={product.id}
             >
                 <div className="w-[50px] flex-custom flex items-center md:w-[20px]">
                     {data.only_one &&
-                        <input type="radio" name={data.title} className={`${inputDefaultClasses} `} checked={product.selected} readOnly={true}/>
+                        <div className={`${styles.radio} ${product.selected && styles.checked}`}></div>
                     }
                     {!data.only_one &&
-                        <input type="checkbox" name={data.title} className={`${inputDefaultClasses}`} checked={product.selected} readOnly={true}/>
+                        <div className={`calculator-checkbox ${product.selected && 'checked'}`}></div>
                     }
                 </div>
                 <div className="w-[70px] h-[50px] mr-[20px] flex-custom flex justify-center items-center">
@@ -39,7 +42,7 @@ const Equipment: React.FC<IEquipmentProps> = ({data, onClick, disabled}: IEquipm
                     <div className="font-bold text-black text-[18px] leading-relaxed">{getPrice(product.price)}</div>
                 </div>
 
-            </label>
+            </div>
         ))
         }
     </>)

@@ -1,0 +1,12 @@
+.radio {
+    @apply w-[18px] h-[18px] rounded-full border-solid border-gray border-[1px] relative after:content-[''] after:w-[10px] after:h-[10px] after:absolute after:left-[50%] after:top-[50%] after:rounded-full;
+    @apply md:w-[16px] md:h-[16px];
+}
+
+.radio.checked {
+    @apply after:bg-blue;
+}
+
+.radio::after {
+    transform: translate(-50%, -50%);
+}
