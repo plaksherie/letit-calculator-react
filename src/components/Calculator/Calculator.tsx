@@ -122,10 +122,11 @@ export const Calculator = () => {
             smooth: true,
         }
 
-        if (calculatorRef.current) {
+        console.log(selectedIndex)
+        if (calculatorRef.current && selectedIndex !== -1) {
             animateScroll.scrollTo(calculatorRef.current.offsetTop - 50, options)
         }
-    }, [currentStep])
+    }, [selectedIndex, currentStep])
 
     const sendForm = async () => {
         await trigger()

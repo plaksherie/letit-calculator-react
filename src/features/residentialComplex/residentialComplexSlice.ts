@@ -83,23 +83,26 @@ const residentialComplexSlice = createSlice({
         selectEquipment: (state, {payload}: PayloadAction<SelectedEquipmentPayload>) => {
             const selectedIndex = getSelectedIndex(state)
             const equipmentBlocks = state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks
-            const equipmentBlock = state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[payload.equipmentIndex]
+            const equipmentBlock = equipmentBlocks[payload.equipmentIndex]
             const products = equipmentBlock.products
             const {product, productIndex} = getProductById(products, payload.productId)
 
+            // radio
             if (equipmentBlock.only_one) {
                 let skip = false
                 products.forEach((_product, index) => {
-                    if (_product.selected) {
+                    if (_product.selected && products.length > 1) {
                         if (_product.id === product?.id) skip = true
                         state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[payload.equipmentIndex].products[index].selected = false
                     }
                 })
-                if (skip) return
+                if (skip && products.length > 1) return
             }
+
             if (equipmentBlock.only_select) {
                 equipmentBlocks.forEach((block, index) => {
-                    block.products.forEach((_, productIndex) => {
+                    block.products.forEach((product, productIndex) => {
+                        if (index === payload.equipmentIndex && product.id === payload.productId) return
                         state.residentialComplexes[selectedIndex].acf.services[payload.serviceIndex].equipment_blocks[index].products[productIndex].selected = false
                     })
                 })
